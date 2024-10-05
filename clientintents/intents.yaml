@@ -88,3 +88,14 @@ spec:
       name: db-secret
       usernameKey: POSTGRES_USER
       passwordKey: POSTGRES_PASSWORD
+---
+apiVersion: k8s.otterize.com/v1alpha3
+kind: ClientIntents
+metadata:
+  name: client-intents-for-db-init-job
+  namespace: oda
+spec:
+  service:
+    name: db-init-job
+  calls:
+    - name: "db"
