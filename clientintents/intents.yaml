@@ -92,10 +92,21 @@ spec:
 apiVersion: k8s.otterize.com/v1alpha3
 kind: ClientIntents
 metadata:
-  name: client-intents-for-db-init-job
+  name: db-init-job
   namespace: oda
 spec:
   service:
     name: db-init-job
   calls:
     - name: "db"
+---
+apiVersion: k8s.otterize.com/v1alpha3
+kind: ClientIntents
+metadata:
+  name: intents-operator
+  namespace: otterize-system
+spec:
+  service:
+    name: intents-operator
+  calls:
+    - name: "db.oda"
