@@ -8,6 +8,7 @@ spec:
     name: case-service
   calls:
     - name: db
+    - name: db
       type: database
       databaseResources:
         - databaseName: oda
@@ -24,6 +25,7 @@ spec:
   service:
     name: deduction-service
   calls:
+    - name: db
     - name: db
       type: database
       databaseResources:
@@ -42,6 +44,7 @@ spec:
   service:
     name: evidence-service
   calls:
+    - name: db
     - name: db
       type: database
       databaseResources:
@@ -75,6 +78,7 @@ spec:
     name: interrogation-service
   calls:
     - name: db
+    - name: db
       type: database
       databaseResources:
         - databaseName: oda
@@ -90,6 +94,7 @@ spec:
   service:
     name: player-service
   calls:
+    - name: db
     - name: db
       type: database
       databaseResources:
@@ -121,7 +126,7 @@ spec:
   service:
     name: db-init-job
   calls:
-    - name: "db"
+    - name: db
 ---
 apiVersion: k8s.otterize.com/v1alpha3
 kind: ClientIntents
@@ -132,4 +137,15 @@ spec:
   service:
     name: intents-operator
   calls:
-    - name: "db.oda"
+    - name: db.oda
+---
+apiVersion: k8s.otterize.com/v1alpha3
+kind: ClientIntents
+metadata:
+  name: credentials-operator
+  namespace: otterize-system
+spec:
+  service:
+    name: credentials-operator-controller-manager
+  calls:
+    - name: db.oda
