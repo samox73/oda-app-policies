@@ -1,0 +1,14 @@
+apiVersion: k8s.otterize.com/v1alpha3
+kind: ClientIntents
+metadata:
+  name: game-service
+  namespace: oda
+spec:
+  service:
+    name: game-service
+  calls:
+    - name: case-service
+    - name: deduction-service
+    - name: evidence-service
+    - name: interrogation-service
+    - name: player-service
