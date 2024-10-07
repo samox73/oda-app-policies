@@ -12,3 +12,4 @@ spec:
     - name: evidence-service
     - name: interrogation-service
     - name: player-service
+    - name: csi-service
