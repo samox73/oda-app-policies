@@ -1,6 +1,23 @@
 apiVersion: k8s.otterize.com/v1alpha3
 kind: ClientIntents
 metadata:
+  name: csi-service
+  namespace: oda
+spec:
+  service:
+    name: csi-service
+  calls:
+    - name: db
+    - name: db
+      type: database
+      databaseResources:
+        - databaseName: oda
+          operations:
+            - SELECT
+---
+apiVersion: k8s.otterize.com/v1alpha3
+kind: ClientIntents
+metadata:
   name: case-service
   namespace: oda
 spec:
