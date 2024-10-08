@@ -1,4 +1,110 @@
 apiVersion: k8s.otterize.com/v1alpha3
+kind: ClientIntents
+metadata:
+  name: case-service
+  namespace: oda
+spec:
+  service:
+    name: case-service
+  calls:
+    - name: db
+    - name: db
+      type: database
+      databaseResources:
+        - databaseName: oda
+          operations:
+            - SELECT
+            - INSERT
+---
+apiVersion: k8s.otterize.com/v1alpha3
+kind: ClientIntents
+metadata:
+  name: deduction-service
+  namespace: oda
+spec:
+  service:
+    name: deduction-service
+  calls:
+    - name: db
+    - name: db
+      type: database
+      databaseResources:
+        - databaseName: oda
+          operations:
+            - SELECT
+            - UPDATE
+
+---
+apiVersion: k8s.otterize.com/v1alpha3
+kind: ClientIntents
+metadata:
+  name: evidence-service
+  namespace: oda
+spec:
+  service:
+    name: evidence-service
+  calls:
+    - name: db
+    - name: db
+      type: database
+      databaseResources:
+        - databaseName: oda
+          operations:
+            - SELECT
+
+---
+apiVersion: k8s.otterize.com/v1alpha3
+kind: ClientIntents
+metadata:
+  name: game-service
+  namespace: oda
+spec:
+  service:
+    name: game-service
+  calls:
+    - name: case-service
+    - name: deduction-service
+    - name: evidence-service
+    - name: interrogation-service
+    - name: player-service
+---
+apiVersion: k8s.otterize.com/v1alpha3
+kind: ClientIntents
+metadata:
+  name: interrogation-service
+  namespace: oda
+spec:
+  service:
+    name: interrogation-service
+  calls:
+    - name: db
+    - name: db
+      type: database
+      databaseResources:
+        - databaseName: oda
+          operations:
+            - SELECT
+---
+apiVersion: k8s.otterize.com/v1alpha3
+kind: ClientIntents
+metadata:
+  name: player-service
+  namespace: oda
+spec:
+  service:
+    name: player-service
+  calls:
+    - name: db
+    - name: db
+      type: database
+      databaseResources:
+        - databaseName: oda
+          operations:
+            - SELECT
+            - INSERT
+            - UPDATE
+---
+apiVersion: k8s.otterize.com/v1alpha3
 kind: PostgreSQLServerConfig
 metadata:
   name: db
@@ -14,83 +120,32 @@ spec:
 apiVersion: k8s.otterize.com/v1alpha3
 kind: ClientIntents
 metadata:
-  name: evidence-service
+  name: db-init-job
   namespace: oda
 spec:
   service:
-    name: evidence-service
+    name: db-init-job
   calls:
-      - name: db
-        type: database
-        databaseResources:
-          - databaseName: oda
-            operations:
-              - SELECT
+    - name: db
 ---
 apiVersion: k8s.otterize.com/v1alpha3
 kind: ClientIntents
 metadata:
-  name: case-service
-  namespace: oda
+  name: intents-operator
+  namespace: otterize-system
 spec:
   service:
-    name: case-service
+    name: intents-operator
   calls:
-      - name: db
-        type: database
-        databaseResources:
-          - databaseName: oda
-            operations:
-              - INSERT
-              - SELECT
+    - name: db.oda
 ---
 apiVersion: k8s.otterize.com/v1alpha3
 kind: ClientIntents
 metadata:
-  name: deduction-service
-  namespace: oda
+  name: credentials-operator
+  namespace: otterize-system
 spec:
   service:
-    name: deduction-service
+    name: credentials-operator-controller-manager
   calls:
-      - name: db
-        type: database
-        databaseResources:
-          - databaseName: oda
-            operations:
-              - UPDATE
-              - SELECT
----
-apiVersion: k8s.otterize.com/v1alpha3
-kind: ClientIntents
-metadata:
-  name: interrogation-service
-  namespace: oda
-spec:
-  service:
-    name: interrogation-service
-  calls:
-      - name: db
-        type: database
-        databaseResources:
-          - databaseName: oda
-            operations:
-              - SELECT
----
-apiVersion: k8s.otterize.com/v1alpha3
-kind: ClientIntents
-metadata:
-  name: player-service
-  namespace: oda
-spec:
-  service:
-    name: player-service
-  calls:
-      - name: db
-        type: database
-        databaseResources:
-          - databaseName: oda
-            operations:
-              - INSERT
-              - UPDATE
-              - SELECT
+    - name: db.oda
