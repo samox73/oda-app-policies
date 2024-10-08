@@ -1,1 +1,96 @@
-
+apiVersion: k8s.otterize.com/v1alpha3
+kind: PostgreSQLServerConfig
+metadata:
+  name: db
+  namespace: oda
+spec:
+  address: db.oda.svc.cluster.local:5432
+  credentials:
+    secretRef:
+      name: db-secret
+      usernameKey: POSTGRES_USER
+      passwordKey: POSTGRES_PASSWORD
+---
+apiVersion: k8s.otterize.com/v1alpha3
+kind: ClientIntents
+metadata:
+  name: evidence-service
+  namespace: oda
+spec:
+  service:
+    name: evidence-service
+  calls:
+      - name: db
+        type: database
+        databaseResources:
+          - databaseName: oda
+            operations:
+              - SELECT
+---
+apiVersion: k8s.otterize.com/v1alpha3
+kind: ClientIntents
+metadata:
+  name: case-service
+  namespace: oda
+spec:
+  service:
+    name: case-service
+  calls:
+      - name: db
+        type: database
+        databaseResources:
+          - databaseName: oda
+            operations:
+              - INSERT
+              - SELECT
+---
+apiVersion: k8s.otterize.com/v1alpha3
+kind: ClientIntents
+metadata:
+  name: deduction-service
+  namespace: oda
+spec:
+  service:
+    name: deduction-service
+  calls:
+      - name: db
+        type: database
+        databaseResources:
+          - databaseName: oda
+            operations:
+              - UPDATE
+              - SELECT
+---
+apiVersion: k8s.otterize.com/v1alpha3
+kind: ClientIntents
+metadata:
+  name: interrogation-service
+  namespace: oda
+spec:
+  service:
+    name: interrogation-service
+  calls:
+      - name: db
+        type: database
+        databaseResources:
+          - databaseName: oda
+            operations:
+              - SELECT
+---
+apiVersion: k8s.otterize.com/v1alpha3
+kind: ClientIntents
+metadata:
+  name: player-service
+  namespace: oda
+spec:
+  service:
+    name: player-service
+  calls:
+      - name: db
+        type: database
+        databaseResources:
+          - databaseName: oda
+            operations:
+              - INSERT
+              - UPDATE
+              - SELECT
